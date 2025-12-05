@@ -360,7 +360,7 @@ function setupScrollRestore() {
 
     if (heroInView) {
       // User is at the top, not scrolling – start 5s timer to re-minimize UI
-      scheduleHeroMinimize(5000);
+      scheduleHeroMinimize(2000);
     }
   }
 
