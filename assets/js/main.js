@@ -188,29 +188,40 @@ function setupGalleryLightbox() {
 
 function setupHeroLoading() {
   const video = document.getElementById('hero-video');
-  if (!video) return;
+  const loader = document.getElementById('hero-loader');
+  if (!video || !loader) return;
 
-  // Start in "loading" state
+  // Start in "loading" mode: lock scroll + show loader
   document.body.classList.add('body--hero-loading');
 
   function showSite() {
-    // Mark video as ready (fade in)
+    // Guard against multiple calls
+    if (!loader || loader.classList.contains('hero-loader--hidden')) return;
+
+    // Mark video as visually ready
     video.classList.add('hero__video--ready');
 
-    // Reveal the rest of the page
+    // Fade out loader
+    loader.classList.add('hero-loader--hidden');
+
+    // Re-enable scrolling
     document.body.classList.remove('body--hero-loading');
 
     // Clean up listeners
-    video.removeEventListener('canplaythrough', showSite);
+    video.removeEventListener('canplay', showSite);
     video.removeEventListener('error', showSite);
   }
 
-  // When the browser thinks it can play through without buffering too much
-  video.addEventListener('canplaythrough', showSite, { once: true });
+  // As soon as the browser can start playing (faster than canplaythrough)
+  video.addEventListener('canplay', showSite, { once: true });
 
-  // Fallback: if something goes wrong, don't leave users stuck on black
+  // Fallback if something goes wrong with the video
   video.addEventListener('error', showSite, { once: true });
+
+  // Extra safety timeout: don't keep people on black forever
+  setTimeout(showSite, 8000);
 }
+
 
 // Mobile nav toggle
 function setupMobileNav() {

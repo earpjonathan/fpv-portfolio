@@ -911,3 +911,75 @@ body.body--lightbox-open {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* --------- HERO LOADER (SPLASH) --------- */
+
+body.body--hero-loading {
+  overflow: hidden; /* prevent scrolling while loading */
+}
+
+/* Fullscreen black overlay */
+.hero-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.6s ease;
+}
+
+/* Fade out & disable interaction once hidden */
+.hero-loader--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Loader content styling */
+.hero-loader__inner {
+  text-align: center;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+.hero-loader__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.hero-loader__mark {
+  border: 1px solid #ffffff;
+  padding: 0.4rem 0.6rem;
+  font-family: "Anton", system-ui;
+  font-size: 0.8rem;
+}
+
+.hero-loader__name {
+  font-weight: 500;
+}
+
+.hero-loader__text {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Optional: fade-in for hero video once ready */
+.hero__video {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero__video--ready {
+  opacity: 1;
+}
+

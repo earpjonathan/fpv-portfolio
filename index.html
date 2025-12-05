@@ -24,6 +24,16 @@
 </head>
 
 <body>
+    <div id="hero-loader" class="hero-loader">
+    <div class="hero-loader__inner">
+      <div class="hero-loader__logo">
+        <span class="hero-loader__mark">FPV</span>
+        <span class="hero-loader__name">Jonathan Earp</span>
+      </div>
+      <p class="hero-loader__text">Loading reel…</p>
+    </div>
+  </div>
+
   <!-- Fixed Navigation -->
   <header class="site-header">
     <div class="site-header__inner">
@@ -51,7 +61,7 @@
     <section id="reel" class="hero" aria-label="Highlight reel">
       <div class="hero__media">
         <!-- Replace src/poster with your own files -->
-        <video
+ <video
   class="hero__video"
   id="hero-video"
   src="assets/videos/reel.mp4"
@@ -62,6 +72,7 @@
   preload="auto"
   poster="assets/images/reel-photo-01.png"
 ></video>
+
 
 
         <div class="hero__media-overlay"></div>
