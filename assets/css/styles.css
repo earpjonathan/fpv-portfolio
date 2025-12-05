@@ -380,6 +380,38 @@ body.ui-minimal .hero__media-overlay {
   );
 }
 
+/* --------- HERO LOADING STATE --------- */
+
+/* While the hero video is loading, keep the page hidden */
+body.body--hero-loading {
+  background: #000; /* full black */
+}
+
+/* Hide header, main content, and footer during loading */
+body.body--hero-loading .site-header,
+body.body--hero-loading main,
+body.body--hero-loading .site-footer {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* When not loading, fade in smoothly */
+.site-header,
+main,
+.site-footer {
+  transition: opacity 0.5s ease;
+}
+
+/* Optional: fade-in for the video itself */
+.hero__video {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.hero__video--ready {
+  opacity: 1;
+}
+
 /* --------- GALLERY --------- */
 
 /* Make gallery section span full width but with padding */

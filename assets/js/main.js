@@ -186,6 +186,31 @@ function setupGalleryLightbox() {
   });
 }
 
+function setupHeroLoading() {
+  const video = document.getElementById('hero-video');
+  if (!video) return;
+
+  // Start in "loading" state
+  document.body.classList.add('body--hero-loading');
+
+  function showSite() {
+    // Mark video as ready (fade in)
+    video.classList.add('hero__video--ready');
+
+    // Reveal the rest of the page
+    document.body.classList.remove('body--hero-loading');
+
+    // Clean up listeners
+    video.removeEventListener('canplaythrough', showSite);
+    video.removeEventListener('error', showSite);
+  }
+
+  // When the browser thinks it can play through without buffering too much
+  video.addEventListener('canplaythrough', showSite, { once: true });
+
+  // Fallback: if something goes wrong, don't leave users stuck on black
+  video.addEventListener('error', showSite, { once: true });
+}
 
 // Mobile nav toggle
 function setupMobileNav() {
@@ -327,4 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupYear();
   scheduleHeroMinimize();
   setupScrollRestore();
+  setupHeroLoading(); // <-- add this
 });
+
