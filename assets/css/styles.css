@@ -450,7 +450,7 @@ body.ui-minimal .hero__media-overlay {
 
 .gallery-item:hover img,
 .gallery-item:hover video {
-  transform: scale(1.03);
+  transform: none;
 }
 
 .gallery-item--video::before,
