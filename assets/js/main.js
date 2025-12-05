@@ -145,13 +145,13 @@ function setupMobileNav() {
   });
 }
 
-// Simple contact form validation
+// Simple contact form validation + send via Formspree
 function setupContactForm() {
   const form = document.getElementById('contact-form');
   const messageEl = document.getElementById('form-message');
   if (!form || !messageEl) return;
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     messageEl.textContent = '';
     messageEl.classList.remove('form-message--error', 'form-message--success');
@@ -174,12 +174,31 @@ function setupContactForm() {
       return;
     }
 
-    messageEl.textContent =
-      'Thanks! Your message has been validated on the front-end. Connect this form to your email or backend to actually send it.';
-    messageEl.classList.add('form-message--success');
-    form.reset();
+    try {
+      const response = await fetch(form.action, {
+        method: form.method || 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        messageEl.textContent = 'Thanks! Your message has been sent.';
+        messageEl.classList.add('form-message--success');
+        form.reset();
+      } else {
+        messageEl.textContent = 'Something went wrong. Please try again later.';
+        messageEl.classList.add('form-message--error');
+      }
+    } catch (error) {
+      console.error(error);
+      messageEl.textContent = 'Network error. Please try again.';
+      messageEl.classList.add('form-message--error');
+    }
   });
 }
+
 
 // Highlight active nav link based on scroll position
 function setupActiveNavOnScroll() {
