@@ -322,25 +322,56 @@ function setupYear() {
   }
 }
 
-// Hero UI auto-minimize after 5s
-function scheduleHeroMinimize() {
+// Schedule hiding the UI (making hero feel fullscreen)
+function scheduleHeroMinimize(delay = 5000) {
+  if (heroMinimizeTimeout) {
+    clearTimeout(heroMinimizeTimeout);
+  }
+
   heroMinimizeTimeout = window.setTimeout(() => {
     document.body.classList.add('ui-minimal');
-  }, 5000); // 5 seconds
+  }, delay);
 }
 
 // Restore UI on scroll
 function setupScrollRestore() {
+  let scrollStopTimeout = null;
+
+  function onScrollStop() {
+    scrollStopTimeout = null;
+
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    const heroRect = hero.getBoundingClientRect();
+    const heroInView =
+      heroRect.top >= -50 && heroRect.bottom > 0; // hero mostly at/near top
+
+    if (heroInView) {
+      // User is at the top, not scrolling – start 5s timer to re-minimize UI
+      scheduleHeroMinimize(5000);
+    }
+  }
+
   window.addEventListener('scroll', () => {
+    // Any scroll: show UI and cancel existing minimize timers
     if (document.body.classList.contains('ui-minimal')) {
       document.body.classList.remove('ui-minimal');
     }
+
     if (heroMinimizeTimeout) {
       clearTimeout(heroMinimizeTimeout);
       heroMinimizeTimeout = null;
     }
+
+    // Debounce to detect "scroll has stopped"
+    if (scrollStopTimeout) {
+      clearTimeout(scrollStopTimeout);
+    }
+    scrollStopTimeout = window.setTimeout(onScrollStop, 150);
   });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   setupSmoothScroll();
@@ -352,6 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupYear();
   scheduleHeroMinimize();
   setupScrollRestore();
-  setupHeroLoading(); // <-- add this
+  setupHeroLoading();
 });
 
