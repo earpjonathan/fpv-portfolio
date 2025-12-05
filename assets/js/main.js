@@ -50,7 +50,7 @@ function setupGalleryHoverVideos() {
 }
 
 // Lightbox for gallery items (click to enlarge with close button)
-// Lightbox for gallery items (click to enlarge with close button)
+// Keeps video playback position when opening the lightbox and avoids first-frame flash.
 function setupGalleryLightbox() {
   const lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
@@ -59,19 +59,58 @@ function setupGalleryLightbox() {
   const captionEl = lightbox.querySelector('.lightbox__caption');
   const closeBtn = lightbox.querySelector('[data-lightbox-close]');
 
-  function openLightbox(mediaEl, captionText) {
+  function openLightbox(mediaEl, captionText, videoState) {
     // Clear previous content
     mediaContainer.innerHTML = '';
 
     // Clone media (img or video)
     const clone = mediaEl.cloneNode(true);
+    const isVideo = clone.tagName.toLowerCase() === 'video';
 
-    if (clone.tagName.toLowerCase() === 'video') {
-      // In the lightbox, show controls and play with sound
+    if (isVideo) {
+      const state = videoState || {};
+      const targetTime = state.currentTime || 0;
+      const wasPaused = state.wasPaused !== false ? true : false;
+
+      // In the lightbox, show controls and allow sound
       clone.removeAttribute('muted');
       clone.setAttribute('controls', '');
-      clone.setAttribute('autoplay', '');
-      clone.currentTime = 0;
+      clone.setAttribute('playsinline', '');
+      clone.setAttribute('preload', 'auto');
+
+      // Hide until we've seeked to the correct frame
+      clone.style.visibility = 'hidden';
+
+      const finishSetup = () => {
+        try {
+          clone.currentTime = targetTime;
+        } catch (e) {
+          // Ignore if we can't set yet; seeked will still fire after a bit
+        }
+
+        const onSeeked = () => {
+          // Now show the frame at the correct time
+          clone.style.visibility = '';
+
+          if (!wasPaused) {
+            const playPromise = clone.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(() => {});
+            }
+          }
+        };
+
+        // Wait for seek to finish so we don't flash frame 0
+        clone.addEventListener('seeked', onSeeked, { once: true });
+      };
+
+      if (clone.readyState >= 2) {
+        // Metadata already loaded, we can set currentTime now
+        finishSetup();
+      } else {
+        // Wait until metadata is ready, then set currentTime
+        clone.addEventListener('loadedmetadata', finishSetup, { once: true });
+      }
     }
 
     mediaContainer.appendChild(clone);
@@ -98,7 +137,7 @@ function setupGalleryLightbox() {
     closeBtn.addEventListener('click', closeLightbox);
   }
 
-  // Close when clicking outside content
+  // Close when clicking backdrop
   lightbox.addEventListener('click', (event) => {
     if (event.target === lightbox) {
       closeLightbox();
@@ -119,7 +158,7 @@ function setupGalleryLightbox() {
     const titleEl = item.querySelector('h3');
     if (!media) return;
 
-    // Prefer data-caption, then alt (for images), then the grid title
+    // Prefer data-caption, then alt (for images), then grid title
     const caption =
       item.getAttribute('data-caption') ||
       (media.tagName.toLowerCase() === 'img' ? media.alt : '') ||
@@ -128,15 +167,25 @@ function setupGalleryLightbox() {
     item.addEventListener('click', (event) => {
       event.preventDefault();
 
-      // Pause inline video if it was playing
-      if (media.tagName.toLowerCase() === 'video') {
+      const isVideo = media.tagName.toLowerCase() === 'video';
+      let videoState = null;
+
+      if (isVideo) {
+        // Capture current time & play/pause state BEFORE pausing
+        videoState = {
+          currentTime: media.currentTime || 0,
+          wasPaused: media.paused,
+        };
+
+        // Pause inline video so only the lightbox version plays
         media.pause();
       }
 
-      openLightbox(media, caption);
+      openLightbox(media, caption, videoState);
     });
   });
 }
+
 
 // Mobile nav toggle
 function setupMobileNav() {
