@@ -301,7 +301,7 @@ function setupYear() {
 function scheduleHeroMinimize() {
   heroMinimizeTimeout = window.setTimeout(() => {
     document.body.classList.add('ui-minimal');
-  }, 5000); // 5 seconds
+  }, 2000); // 5 seconds
 }
 
 // Restore UI on scroll
