@@ -50,6 +50,7 @@ function setupGalleryHoverVideos() {
 }
 
 // Lightbox for gallery items (click to enlarge with close button)
+// Lightbox for gallery items (click to enlarge with close button)
 function setupGalleryLightbox() {
   const lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
@@ -58,7 +59,7 @@ function setupGalleryLightbox() {
   const captionEl = lightbox.querySelector('.lightbox__caption');
   const closeBtn = lightbox.querySelector('[data-lightbox-close]');
 
-  function openLightbox(mediaEl, title) {
+  function openLightbox(mediaEl, captionText) {
     // Clear previous content
     mediaContainer.innerHTML = '';
 
@@ -74,7 +75,7 @@ function setupGalleryLightbox() {
     }
 
     mediaContainer.appendChild(clone);
-    captionEl.textContent = title || '';
+    captionEl.textContent = captionText || '';
 
     lightbox.classList.add('lightbox--open');
     document.body.classList.add('body--lightbox-open');
@@ -118,7 +119,11 @@ function setupGalleryLightbox() {
     const titleEl = item.querySelector('h3');
     if (!media) return;
 
-    const title = titleEl ? titleEl.textContent.trim() : '';
+    // Prefer data-caption, then alt (for images), then the grid title
+    const caption =
+      item.getAttribute('data-caption') ||
+      (media.tagName.toLowerCase() === 'img' ? media.alt : '') ||
+      (titleEl ? titleEl.textContent.trim() : '');
 
     item.addEventListener('click', (event) => {
       event.preventDefault();
@@ -128,7 +133,7 @@ function setupGalleryLightbox() {
         media.pause();
       }
 
-      openLightbox(media, title);
+      openLightbox(media, caption);
     });
   });
 }
