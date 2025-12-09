@@ -321,82 +321,72 @@
           </div>
         </div>
 
-        <aside class="about__side">
-          <div class="about__portrait">
-            Portrait Placeholder
-          </div>
-          <div class="about__details">
-            <p><strong>Based in:</strong> Oakland, CA</p>
-            <p><strong>Available for:</strong> Commercial, events, brand shoots.</p>
-          </div>
-        </aside>
-      </div>
-    </section>
+<aside class="about__side">
+  <div class="about__portrait">
+    <img src="assets/images/portrait.jpg" alt="Portrait of Jonathan Earp" />
+  </div>
+  <div class="about__details">
+    <p><strong>Based in:</strong> Oakland, CA</p>
+    <p><strong>Available for:</strong> Commercial, events, brand shoots.</p>
+  </div>
+</aside>
 
 
 
-    <!-- Contact -->
-    <section id="contact" class="section section--padded section--dark">
-      <div class="contact">
-        <div class="contact__form-wrapper">
-          <h2 class="section__title">Contact</h2>
-          <p class="section__subtitle">
-          </p>
+<section id="contact" class="section section--padded section--dark">
+  <div class="contact">
+    <!-- Contact Form -->
+    <div class="contact__form-wrapper">
+      <h2 class="section__title">Contact</h2>
+      <p class="section__subtitle">
+      </p>
 
-          <form
-            id="contact-form"
-            novalidate
-            action="https://formspree.io/f/mvgeqrzb"
-            method="POST"
-          >
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" placeholder="Your name" required />
-            </div>
-
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="you@example.com" required />
-            </div>
-
-            <div class="form-row">
-              <label for="message">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                placeholder="Project description, date, and any references..."
-                required
-              ></textarea>
-            </div>
-
-            <div class="form-footer">
-              <button type="submit" class="btn btn--primary">Send message</button>
-              <p class="form-message" id="form-message" aria-live="polite"></p>
-            </div>
-          </form>
+      <form id="contact-form" novalidate action="https://formspree.io/f/mvgeqrzb" method="POST">
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required />
         </div>
 
-        <aside class="contact__details">
-          <h3 class="contact__heading">Direct</h3>
-          <p class="contact__line">
-            Email:
-            <a href="mailto:jonathan.earp55@gmail.com">jonathan.earp55@gmail.com</a>
-          </p>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        </div>
 
-          <h3 class="contact__heading">Social</h3>
-          <ul class="social-list">
-            <li><a href="https://www.instagram.com/jonathanearp.1/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="#" target="_blank" rel="noopener">YouTube</a></li>
-            <li><a href="#" target="_blank" rel="noopener">TikTok</a></li>
-          </ul>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Project description, date, and any references..." required></textarea>
+        </div>
 
-          <p class="contact__note">
-            Available for shoots worldwide, depending on permits and local regulations.
-          </p>
-        </aside>
-      </div>
-    </section>
+        <div class="form-footer">
+          <button type="submit" class="btn btn--primary">Send message</button>
+          <p class="form-message" id="form-message" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Contact Details (Right Side) -->
+    <aside class="contact__details">
+      <h3 class="contact__heading">Direct</h3>
+      <p class="contact__line">
+        Email:
+        <a href="mailto:jonathan.earp55@gmail.com">jonathan.earp55@gmail.com</a>
+      </p>
+
+      <h3 class="contact__heading">Social</h3>
+      <ul class="social-list">
+        <li><a href="https://www.instagram.com/jonathanearp.1/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="#" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="#" target="_blank" rel="noopener">TikTok</a></li>
+      </ul>
+
+      <p class="contact__note">
+        Available for shoots worldwide, depending on permits and local regulations.
+      </p>
+    </aside>
+  </div>
+</section>
+
+
 
     <!-- Lightbox for gallery items -->
     <div id="lightbox" class="lightbox" aria-hidden="true">

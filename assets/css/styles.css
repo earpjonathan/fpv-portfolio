@@ -618,115 +618,134 @@ main,
   margin-top: 0.25rem;
 }
 
-/* --------- CONTACT --------- */
+/* --------- CONTACT SECTION --------- */
 .contact {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
-  gap: 2.5rem;
+  grid-template-columns: 1fr 1fr; /* Two columns, left (form) and right (details) */
+  gap: 2rem; /* Space between the form and the contact details */
   align-items: flex-start;
+  padding: 2rem 1.5rem;
+  max-width: 1200px; /* Optional, just to keep it centered and prevent stretching too far */
+  margin: 0 auto;
 }
 
 .contact__form-wrapper {
   background: #000000;
   border: 1px solid var(--border-subtle);
-  padding: 2rem 2rem 2.2rem;
-}
-
-.form-row {
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 1.1rem;
-}
-
-label {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-input,
-textarea {
-  border: 1px solid var(--border-subtle);
-  background: #0a0a0a;
-  padding: 0.7rem 1rem;
-  font-size: 0.9rem;
-  color: var(--text);
-  font-family: inherit;
-  outline: none;
-  transition:
-    border-color var(--transition-fast),
-    background var(--transition-fast);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 140px;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #5e5e5e;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #ffffff;
-  background: #111111;
-}
-
-.form-footer {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.form-message {
-  min-height: 1.1rem;
-  font-size: 0.8rem;
-}
-
-.form-message--error {
-  color: var(--error);
-}
-
-.form-message--success {
-  color: var(--success);
+  gap: 1.5rem;
+  border-radius: 8px;
 }
 
 .contact__details {
-  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   color: var(--muted);
+  font-size: 1rem;
 }
 
 .contact__heading {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  margin: 0 0 0.4rem;
-  color: var(--muted);
+  font-size: 1.1rem;
+  color: var(--text);
   font-family: "Anton", system-ui;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .contact__line {
-  margin: 0 0 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .social-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.4rem;
+  margin: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  gap: 1rem;
 }
 
 .social-list a {
-  font-size: 0.9rem;
+  color: var(--muted);
+  font-size: 1rem;
 }
 
 .contact__note {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 1rem;
+}
+
+/* --------- FORM ELEMENTS --------- */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input,
+textarea {
+  padding: 0.7rem;
+  border: 1px solid var(--border-subtle);
+  background: #0a0a0a;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #ffffff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+/* --------- BUTTON STYLE --------- */
+.form-footer button {
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 0.8rem 1.6rem;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.form-footer button:hover {
+  background-color: var(--muted);
+  transform: translateY(-2px);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* --------- MOBILE LAYOUT: Stack contact form and details --------- */
+@media (max-width: 768px) {
+  .contact {
+    grid-template-columns: 1fr; /* Stack form and details on top of each other */
+  }
+
+  .contact__details {
+    order: -1; /* Ensure details appear above the form on smaller screens */
+  }
+
+  .contact__form-wrapper {
+    width: 100%; /* Make the form take the full width on mobile */
+  }
+
+  .social-list {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 /* --------- FOOTER --------- */
@@ -983,3 +1002,23 @@ body.body--hero-loading {
   opacity: 1;
 }
 
+.about__portrait {
+  width: 210px;
+  height: 210px;
+  border: 2px solid #ffffff;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  overflow: hidden; /* Prevents image overflow */
+}
+
+.about__portrait img {
+  width: 100%; /* Makes the image fill the width of the container */
+  height: 100%; /* Makes the image fill the height of the container */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
