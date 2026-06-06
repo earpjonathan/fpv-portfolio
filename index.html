@@ -52,12 +52,23 @@
     <!-- HERO / REEL -->
     <section id="reel" class="hero">
       <div class="hero__media">
-        <video class="hero__video" id="hero-video"
-          src="assets/videos/reel.mp4"
+        <!-- lightweight preview (~1.8 MB) — plays instantly -->
+        <video class="hero__video hero__video--lq" id="hero-lq"
           autoplay muted loop playsinline preload="auto"
-          poster="assets/images/reel-photo-01.png"></video>
+          poster="assets/images/reel-photo-01.png">
+          <source src="assets/videos/reel-preview.mp4" type="video/mp4">
+        </video>
+        <!-- full-quality reel — loaded in the background, fades in when ready -->
+        <video class="hero__video hero__video--hq" id="hero-hq"
+          muted loop playsinline preload="none"></video>
       </div>
       <div class="hero__scrim"></div>
+
+      <!-- loading screen: fades out once the preview can play -->
+      <div class="hero-loader" id="hero-loader" aria-hidden="true">
+        <div class="hero-loader__mark">Jonathan&nbsp;Earp <span>FPV</span></div>
+        <div class="hero-loader__bar"><span></span></div>
+      </div>
 
       <div class="hero__inner">
         <div class="hero__eyebrow mono">
