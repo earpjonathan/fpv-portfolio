@@ -2,315 +2,233 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>FPV Drone Cinematography – Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="FPV drone cinematography portfolio – highlight reel, gallery, and contact." />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
-
-  <!-- Favicon -->
+  <title>Jonathan Earp — FPV Drone Cinematography</title>
+  <meta name="description" content="FPV drone cinematography by Jonathan Earp — cinematic fly-throughs, chase footage, and aerial stills. 4K · long-range · indoor & outdoor." />
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
-  <!-- Optional PNG fallback if you add one later -->
   <link rel="alternate icon" href="assets/images/favicon.png" type="image/png" />
 
-  <!-- Main stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add("js");
+      try {
+        d.dataset.theme = localStorage.getItem("theme") || "dark";
+      } catch (e) { d.dataset.theme = "dark"; }
+    })();
+  </script>
 </head>
 
 <body>
-    <div id="hero-loader" class="hero-loader">
-    <div class="hero-loader__inner">
-      <div class="hero-loader__logo">
-        <span class="hero-loader__mark">FPV</span>
-        <span class="hero-loader__name">Jonathan Earp</span>
-      </div>
-      <p class="hero-loader__text">Loading…</p>
-    </div>
-  </div>
 
-  <!-- Fixed Navigation -->
-  <header class="site-header">
-    <div class="site-header__inner">
-      <div class="logo">
-        <span class="logo__mark">FPV</span>
-        <span class="logo__text">Jonathan Earp</span>
-      </div>
+  <div class="vlabel" aria-hidden="true">Reel — MMXXIV</div>
 
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="#reel" class="site-nav__link">Reel</a>
-        <a href="#gallery" class="site-nav__link">Gallery</a>
-        <a href="#about" class="site-nav__link">About</a>
-        <a href="#contact" class="site-nav__link">Contact</a>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://jonathanearp.xyz" class="brand">Jonathan Earp <span class="brand__crumb">FPV</span></a>
+      <nav class="topnav" id="topnav">
+        <a href="#reel" class="topnav__link">Reel</a>
+        <a href="#gallery" class="topnav__link">Gallery</a>
+        <a href="#contact" class="topnav__link">Contact</a>
+        <a href="https://jonathanearp.xyz" class="topnav__link">Index ↗</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
+          <span class="theme-toggle__dot"></span><span class="theme-toggle__label"></span>
+        </button>
       </nav>
-
-      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-        <span class="nav-toggle__line"></span>
-        <span class="nav-toggle__line"></span>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
       </button>
     </div>
   </header>
 
   <main>
-    <!-- Hero / Highlight Reel -->
-    <section id="reel" class="hero" aria-label="Highlight reel">
+
+    <!-- HERO / REEL -->
+    <section id="reel" class="hero">
       <div class="hero__media">
-        <!-- Replace src/poster with your own files -->
- <video
-  class="hero__video"
-  id="hero-video"
-  src="assets/videos/reel.mp4"
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="auto"
-  poster="assets/images/reel-photo-01.png"
-></video>
-
-
-
-        <div class="hero__media-overlay"></div>
+        <video class="hero__video" id="hero-video"
+          src="assets/videos/reel.mp4"
+          autoplay muted loop playsinline preload="auto"
+          poster="assets/images/reel-photo-01.png"></video>
       </div>
+      <div class="hero__scrim"></div>
 
-      <div class="hero__content">
-        <p class="hero__eyebrow">FPV Drone Cinematography</p>
-        <h1 class="hero__title">
-          Low-Altitude. High-Adrenaline. Aerial Cinematography.
-        </h1>
-        <p class="hero__subtitle">
-          Dynamic FPV shots and Slow Cinematic Fly-Throughs
-        </p>
-
-        <div class="hero__actions">
-          <button class="btn btn--primary" data-scroll-target="#gallery">
-            View Gallery
-          </button>
-          <button class="btn btn--ghost" data-scroll-target="#contact">
-            Contact
-          </button>
+      <div class="hero__inner">
+        <div class="hero__eyebrow mono">
+          <span><span class="dot">●</span> FPV Cinematography</span>
+          <span>Reel 2024</span>
+        </div>
+        <h1 class="hero__title">Low&nbsp;altitude,<br>high adrenaline.</h1>
+        <div class="hero__row">
+          <p class="hero__subtitle">
+            Dynamic FPV chase work and slow cinematic fly-throughs — flown and graded by Jonathan Earp.
+          </p>
+          <div class="hero__actions">
+            <a class="cta cta--accent" href="#gallery"><span>View Gallery</span><span class="cta__arrow">↓</span></a>
+            <a class="cta" href="#contact"><span>Book a shoot</span><span class="cta__arrow">↗</span></a>
+          </div>
         </div>
       </div>
-
-      <div class="hero__meta">
-        <span>4K • 60fps • Long-range • Indoor & outdoor</span>
-      </div>
+      <div class="scroll-prompt" aria-hidden="true"><span>Scroll to continue</span><span class="chev"></span></div>
     </section>
 
-    <!-- Gallery: 3x3, photos in corners (1,3,7,9) -->
-    <section id="gallery" class="section section--padded section--dark">
-      <div class="section__header">
-        <h2 class="section__title">Gallery</h2>
-        <p class="section__subtitle">
-          A mix of cinematic flights, chase footage, and stills from recent shoots.
-        </p>
+    <!-- GALLERY -->
+    <section id="gallery" class="section wrap">
+      <div class="shead" data-reveal>
+        <span class="shead__no">01</span>
+        <span class="shead__title">Selected Gallery</span>
+        <span class="shead__meta">Flights · chases · stills</span>
       </div>
 
-      <div class="gallery-grid">
-        <!-- Row 1: PHOTO, VIDEO, PHOTO -->
-        <article
-          class="gallery-item gallery-item--photo"
-          data-label="Photo"
-          data-caption="Golf Course with road going through | Golf Course shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <img
-              src="assets/images/fpv-photo-01.jpg"
-              alt="FPV drone shot of a mountain ridge at sunset"
-              loading="lazy"
-            />
+      <div class="gallery__grid">
+        <article class="gitem" data-reveal data-kind="Photo"
+          data-caption="Golf course with a road cutting through — shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">01</span><span class="gitem__kind">Photo</span>
+            <img src="assets/images/fpv-photo-01.jpg" alt="Top-down aerial of a road crossing a green golf course" loading="lazy" />
           </div>
-          <div class="gallery-item__info">
-            <h3>Nature/Landscape Shots</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Nature / Landscape</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--video"
-          data-label="Video"
-          data-caption="Dynamic car chase sequence in open environment | Shot on DJI O3 Air Unit"
-        >
-          <div class="gallery-item__media">
-            <video
-              src="assets/videos/Fpv-Clip-01.mp4"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/images/fpv-clip-01-poster.png"
-            ></video>
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+          data-caption="Dynamic car-chase sequence in an open environment — shot on DJI O3 Air Unit.">
+          <div class="gitem__media">
+            <span class="gitem__no">02</span><span class="gitem__kind">Video</span>
+            <video src="assets/videos/Fpv-Clip-01.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-01-poster.png"></video>
           </div>
-          <div class="gallery-item__info">
-            <h3>Car Chasing</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Car Chasing</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--photo"
-          data-label="Photo"
-          data-caption="Low light, night shooting | Mormon Temple shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <img
-              src="assets/images/fpv-photo-02.jpg"
-              alt="Night Shots"
-              loading="lazy"
-            />
+        <article class="gitem" data-reveal style="--i:2" data-kind="Photo"
+          data-caption="Low-light night shooting — Oakland Temple, shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">03</span><span class="gitem__kind">Photo</span>
+            <img src="assets/images/fpv-photo-02.jpg" alt="Illuminated temple from above at night" loading="lazy" />
           </div>
-          <div class="gallery-item__info">
-            <h3>Night Shots</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Night Shots</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <!-- Row 2: VIDEO, VIDEO, VIDEO -->
-        <article
-          class="gallery-item gallery-item--video"
-          data-label="Video"
-          data-caption="Flying through Oakland, CA | Shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <video
-              src="assets/videos/Fpv-Clip-02.mp4"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/images/fpv-clip-02-poster.png"
-            ></video>
+        <article class="gitem" data-reveal data-kind="Video"
+          data-caption="Cinematic fly-through of Oakland, CA — shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">04</span><span class="gitem__kind">Video</span>
+            <video src="assets/videos/Fpv-Clip-02.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-02-poster.png"></video>
           </div>
-          <div class="gallery-item__info">
-            <h3>Cinematic City Fly-Through</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">City Fly-Through</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--video"
-          data-label="Video"
-          data-caption="Outdoor cinematic freestyle flight | Shot at Hayward Field on DJI O3 Air Unit"
-        >
-          <div class="gallery-item__media">
-            <video
-              src="assets/videos/Fpv-Clip-03.mp4"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/images/fpv-clip-03-poster.png"
-            ></video>
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+          data-caption="Outdoor cinematic freestyle flight at Hayward Field — shot on DJI O3 Air Unit.">
+          <div class="gitem__media">
+            <span class="gitem__no">05</span><span class="gitem__kind">Video</span>
+            <video src="assets/videos/Fpv-Clip-03.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-03-poster.png"></video>
           </div>
-          <div class="gallery-item__info">
-            <h3>Outdoor Cinematic FPV</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Cinematic FPV</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--video"
-          data-label="Video"
-          data-caption="Sunset with fog rolling over hills | Shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <video
-              src="assets/videos/Fpv-Clip-04.mp4"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/images/fpv-clip-04-poster.png"
-            ></video>
+        <article class="gitem" data-reveal style="--i:2" data-kind="Video"
+          data-caption="Sunset with fog rolling over the hills — shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">06</span><span class="gitem__kind">Video</span>
+            <video src="assets/videos/Fpv-Clip-04.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-04-poster.png"></video>
           </div>
-          <div class="gallery-item__info">
-            <h3>Cinematic Landscape Video</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Landscape Cinematic</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <!-- Row 3: PHOTO, VIDEO, PHOTO -->
-        <article
-          class="gallery-item gallery-item--photo"
-          data-label="Photo"
-          data-caption="Freeway going through neighborhood | Freeway shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <img
-              src="assets/images/fpv-photo-03.jpg"
-              alt="FPV drone following a car on a winding road"
-              loading="lazy"
-            />
+        <article class="gitem" data-reveal data-kind="Photo"
+          data-caption="Freeway threading through a neighborhood — shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">07</span><span class="gitem__kind">Photo</span>
+            <img src="assets/images/fpv-photo-03.jpg" alt="Vertical top-down shot of a freeway through a neighborhood" loading="lazy" />
           </div>
-          <div class="gallery-item__info">
-            <h3>Vertical/Top Down Landscape</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Top-Down Landscape</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--video"
-          data-label="Video"
-          data-caption="Crane dive to drummer shot for music video | Shot on DJI O3 Air Unit"
-        >
-          <div class="gallery-item__media">
-            <video
-              src="assets/videos/Fpv-Clip-05.mp4"
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              poster="assets/images/fpv-clip-05-poster.png"
-            ></video>
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+          data-caption="Crane-dive to drummer for a music video — shot on DJI O3 Air Unit.">
+          <div class="gitem__media">
+            <span class="gitem__no">08</span><span class="gitem__kind">Video</span>
+            <video src="assets/videos/Fpv-Clip-05.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-05-poster.png"></video>
           </div>
-          <div class="gallery-item__info">
-            <h3>Music Video Prodution</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Music Video</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article
-          class="gallery-item gallery-item--photo"
-          data-label="Photo"
-          data-caption="Real Estate or neighborhood photos | Street shot on DJI Mini 3 Pro"
-        >
-          <div class="gallery-item__media">
-            <img
-              src="assets/images/fpv-photo-04.jpg"
-              alt="FPV drone flying near a modern glass building"
-              loading="lazy"
-            />
+        <article class="gitem" data-reveal style="--i:2" data-kind="Photo"
+          data-caption="Real-estate / neighborhood street view — shot on DJI Mini 3 Pro.">
+          <div class="gitem__media">
+            <span class="gitem__no">09</span><span class="gitem__kind">Photo</span>
+            <img src="assets/images/fpv-photo-04.jpg" alt="Aerial of a residential street" loading="lazy" />
           </div>
-          <div class="gallery-item__info">
-            <h3>Home/Real Estate</h3>
-          </div>
+          <div class="gitem__bar"><span class="gitem__title">Home / Real Estate</span><span class="gitem__view">View ↗</span></div>
         </article>
       </div>
     </section>
 
-    
-
-    <!-- Lightbox for gallery items -->
-    <div id="lightbox" class="lightbox" aria-hidden="true">
-      <div class="lightbox__content" role="dialog" aria-modal="true">
-        <button
-          class="lightbox__close"
-          type="button"
-          aria-label="Close enlarged media"
-          data-lightbox-close
-        >
-          ×
-        </button>
-        <div class="lightbox__media"></div>
-        <p class="lightbox__caption"></p>
+    <!-- CONTACT -->
+    <section id="contact" class="section wrap">
+      <div class="shead" data-reveal>
+        <span class="shead__no">02</span>
+        <span class="shead__title">Work Together</span>
+        <span class="shead__meta">Booking &amp; collaboration</span>
       </div>
-    </div>
+      <div class="contact__grid">
+        <h2 class="contact__big" data-reveal>Got a shot<br>in mind?<br><a href="mailto:jonathan.earp55@gmail.com">Let's talk ↗</a></h2>
+        <div class="contact__side" data-reveal style="--i:1">
+          <ul>
+            <li><a href="mailto:jonathan.earp55@gmail.com">Email<span class="arr">↗</span></a></li>
+            <li><a href="https://www.instagram.com/jonathanearp.1/" target="_blank" rel="noopener">Instagram<span class="arr">↗</span></a></li>
+            <li><a href="https://www.linkedin.com/in/jonathan-earp-25905026b/" target="_blank" rel="noopener">LinkedIn<span class="arr">↗</span></a></li>
+            <li><a href="https://x.com/JonathanEarp_" target="_blank" rel="noopener">X / Twitter<span class="arr">↗</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="site-footer">
-    <p>
-      &copy; <span id="year"></span> Jonathan Earp — FPV Drone Cinematography.
-    </p>
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox__content" role="dialog" aria-modal="true">
+      <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Close">×</button>
+      <div class="lightbox__media" id="lightbox-media"></div>
+      <p class="lightbox__cap" id="lightbox-cap"></p>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__grid">
+        <div class="foot__col"><div class="foot__big">Roll<br>camera.</div></div>
+        <div class="foot__col">
+          <h4>Index</h4>
+          <ul>
+            <li><a href="https://jonathanearp.xyz">Home ↗</a></li>
+            <li><a href="https://research.jonathanearp.xyz">Research ↗</a></li>
+            <li><a href="https://resume.jonathanearp.xyz">Résumé ↗</a></li>
+          </ul>
+        </div>
+        <div class="foot__col">
+          <h4>Elsewhere</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/jonathanearp.1/" target="_blank" rel="noopener">Instagram ↗</a></li>
+            <li><a href="mailto:jonathan.earp55@gmail.com">Email ↗</a></li>
+          </ul>
+        </div>
+        <a href="#reel" class="to-top">↑ Top</a>
+      </div>
+      <div class="foot__bar">
+        <span>© <span id="year">2026</span> Jonathan Earp</span>
+        <span>FPV · Drone · Cinematography</span>
+      </div>
+    </div>
   </footer>
 
-  <!-- Main script -->
   <script src="assets/js/main.js"></script>
 </body>
 </html>
