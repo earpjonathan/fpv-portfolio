@@ -27,6 +27,9 @@
 
 <body>
 
+  <!-- topographic background — visible behind the gallery and contact sections -->
+  <canvas id="topo" data-topo data-interactive="true" aria-hidden="true"></canvas>
+
   <div class="vlabel" aria-hidden="true">Reel — MMXXIV</div>
 
   <header class="topbar">
@@ -55,7 +58,7 @@
         <!-- lightweight preview (~1.8 MB) — plays instantly -->
         <video class="hero__video hero__video--lq" id="hero-lq"
           autoplay muted loop playsinline preload="auto"
-          poster="assets/images/reel-photo-01.png">
+          poster="assets/images/reel-photo-01.jpg">
           <source src="assets/videos/reel-preview.mp4" type="video/mp4">
         </video>
         <!-- full-quality reel — loaded in the background, fades in when ready -->
@@ -102,16 +105,16 @@
           data-caption="Golf course with a road cutting through — shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">01</span><span class="gitem__kind">Photo</span>
-            <img src="assets/images/fpv-photo-01.jpg" alt="Top-down aerial of a road crossing a green golf course" loading="lazy" />
+            <img src="assets/images/fpv-photo-01.jpg" alt="Top-down aerial of a road crossing a green golf course" loading="lazy" decoding="async" />
           </div>
           <div class="gitem__bar"><span class="gitem__title">Nature / Landscape</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-01.mp4"
           data-caption="Dynamic car-chase sequence in an open environment — shot on DJI O3 Air Unit.">
           <div class="gitem__media">
             <span class="gitem__no">02</span><span class="gitem__kind">Video</span>
-            <video src="assets/videos/Fpv-Clip-01.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-01-poster.png"></video>
+            <video src="assets/videos/Fpv-Clip-01-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-01-poster.jpg"></video>
           </div>
           <div class="gitem__bar"><span class="gitem__title">Car Chasing</span><span class="gitem__view">Play ↗</span></div>
         </article>
@@ -120,34 +123,34 @@
           data-caption="Low-light night shooting — Oakland Temple, shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">03</span><span class="gitem__kind">Photo</span>
-            <img src="assets/images/fpv-photo-02.jpg" alt="Illuminated temple from above at night" loading="lazy" />
+            <img src="assets/images/fpv-photo-02.jpg" alt="Illuminated temple from above at night" loading="lazy" decoding="async" />
           </div>
           <div class="gitem__bar"><span class="gitem__title">Night Shots</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <article class="gitem" data-reveal data-kind="Video"
+        <article class="gitem" data-reveal data-kind="Video" data-full="assets/videos/Fpv-Clip-02.mp4"
           data-caption="Cinematic fly-through of Oakland, CA — shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">04</span><span class="gitem__kind">Video</span>
-            <video src="assets/videos/Fpv-Clip-02.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-02-poster.png"></video>
+            <video src="assets/videos/Fpv-Clip-02-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-02-poster.jpg"></video>
           </div>
           <div class="gitem__bar"><span class="gitem__title">City Fly-Through</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-03.mp4"
           data-caption="Outdoor cinematic freestyle flight at Hayward Field — shot on DJI O3 Air Unit.">
           <div class="gitem__media">
             <span class="gitem__no">05</span><span class="gitem__kind">Video</span>
-            <video src="assets/videos/Fpv-Clip-03.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-03-poster.png"></video>
+            <video src="assets/videos/Fpv-Clip-03-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-03-poster.jpg"></video>
           </div>
           <div class="gitem__bar"><span class="gitem__title">Cinematic FPV</span><span class="gitem__view">Play ↗</span></div>
         </article>
 
-        <article class="gitem" data-reveal style="--i:2" data-kind="Video"
+        <article class="gitem" data-reveal style="--i:2" data-kind="Video" data-full="assets/videos/Fpv-Clip-04.mp4"
           data-caption="Sunset with fog rolling over the hills — shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">06</span><span class="gitem__kind">Video</span>
-            <video src="assets/videos/Fpv-Clip-04.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-04-poster.png"></video>
+            <video src="assets/videos/Fpv-Clip-04-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-04-poster.jpg"></video>
           </div>
           <div class="gitem__bar"><span class="gitem__title">Landscape Cinematic</span><span class="gitem__view">Play ↗</span></div>
         </article>
@@ -156,16 +159,16 @@
           data-caption="Freeway threading through a neighborhood — shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">07</span><span class="gitem__kind">Photo</span>
-            <img src="assets/images/fpv-photo-03.jpg" alt="Vertical top-down shot of a freeway through a neighborhood" loading="lazy" />
+            <img src="assets/images/fpv-photo-03.jpg" alt="Vertical top-down shot of a freeway through a neighborhood" loading="lazy" decoding="async" />
           </div>
           <div class="gitem__bar"><span class="gitem__title">Top-Down Landscape</span><span class="gitem__view">View ↗</span></div>
         </article>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video"
+        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-05.mp4"
           data-caption="Crane-dive to drummer for a music video — shot on DJI O3 Air Unit.">
           <div class="gitem__media">
             <span class="gitem__no">08</span><span class="gitem__kind">Video</span>
-            <video src="assets/videos/Fpv-Clip-05.mp4" muted loop playsinline preload="metadata" poster="assets/images/fpv-clip-05-poster.png"></video>
+            <video src="assets/videos/Fpv-Clip-05-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-05-poster.jpg"></video>
           </div>
           <div class="gitem__bar"><span class="gitem__title">Music Video</span><span class="gitem__view">Play ↗</span></div>
         </article>
@@ -174,7 +177,7 @@
           data-caption="Real-estate / neighborhood street view — shot on DJI Mini 3 Pro.">
           <div class="gitem__media">
             <span class="gitem__no">09</span><span class="gitem__kind">Photo</span>
-            <img src="assets/images/fpv-photo-04.jpg" alt="Aerial of a residential street" loading="lazy" />
+            <img src="assets/images/fpv-photo-04.jpg" alt="Aerial of a residential street" loading="lazy" decoding="async" />
           </div>
           <div class="gitem__bar"><span class="gitem__title">Home / Real Estate</span><span class="gitem__view">View ↗</span></div>
         </article>
@@ -240,6 +243,7 @@
     </div>
   </footer>
 
+  <script src="assets/js/topo.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

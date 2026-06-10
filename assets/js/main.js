@@ -129,14 +129,20 @@
   var closeBtn = document.getElementById("lightbox-close");
   if (!lb || !media) return;
 
-  function open(srcEl, caption, state) {
+  function open(srcEl, caption, state, fullSrc) {
     media.innerHTML = "";
     var clone = srcEl.cloneNode(true);
     if (clone.tagName.toLowerCase() === "video") {
+      /* the grid plays a small muted preview; the lightbox gets the
+         full-quality file (with audio), resuming at the same moment */
+      if (fullSrc) clone.setAttribute("src", fullSrc);
       clone.removeAttribute("muted");
       clone.muted = false;
       clone.setAttribute("controls", "");
+      clone.setAttribute("preload", "auto");
       clone.removeAttribute("loop");
+    } else {
+      clone.setAttribute("loading", "eager"); /* show immediately in the lightbox */
       var t = (state && state.currentTime) || 0;
       var wasPaused = state ? state.wasPaused : true;
       var go = function () {
@@ -178,7 +184,7 @@
         state = { currentTime: el.currentTime || 0, wasPaused: el.paused };
         el.pause();
       }
-      open(el, caption, state);
+      open(el, caption, state, item.getAttribute("data-full"));
     });
   });
 })();
