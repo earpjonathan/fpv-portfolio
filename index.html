@@ -19,9 +19,34 @@
     (function () {
       var d = document.documentElement;
       d.classList.add("js");
-      try {
-        d.dataset.theme = localStorage.getItem("theme") || "dark";
-      } catch (e) { d.dataset.theme = "dark"; }
+
+      /* The five sites are separate origins, so localStorage cannot carry the
+         theme between them - toggling on the hub and clicking through used to
+         land you back in dark. A cookie on the parent domain does carry, so it
+         is read first; localStorage stays as the fallback for local dev, where
+         a .jonathanearp.xyz cookie is dropped. With neither set, follow the OS
+         instead of forcing dark on someone whose machine is in light mode. */
+      var t = "";
+      var m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)/);
+      if (m) t = m[1];
+      if (!t) { try { t = localStorage.getItem("theme") || ""; } catch (e) {} }
+      if (!t && window.matchMedia &&
+          matchMedia("(prefers-color-scheme: light)").matches) t = "light";
+      d.dataset.theme = t === "light" ? "light" : "dark";
+
+      /* Written by the toggle in every site's script - one place that knows
+         about the cookie, so the five copies of the toggle stay trivial. */
+      window.__setTheme = function (next) {
+        d.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        try {
+          var dom = /(^|\.)jonathanearp\.xyz$/i.test(location.hostname)
+            ? ";domain=.jonathanearp.xyz" : "";
+          document.cookie = "theme=" + next +
+            ";path=/;max-age=31536000;samesite=lax" + dom +
+            (location.protocol === "https:" ? ";secure" : "");
+        } catch (e) {}
+      };
     })();
   </script>
 </head>
@@ -45,7 +70,8 @@
           <span class="theme-toggle__dot"></span><span class="theme-toggle__label"></span>
         </button>
       </nav>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <button class="nav-toggle" id="nav-toggle" type="button"
+              aria-label="Menu" aria-expanded="false" aria-controls="topnav">
         <span></span><span></span>
       </button>
     </div>
@@ -85,8 +111,8 @@
             FPV chase work and slow cinematic fly-throughs, flown and graded by Jonathan Earp.
           </p>
           <div class="hero__actions">
-            <a class="cta cta--accent" href="#gallery"><span>View Gallery</span><span class="cta__arrow">↓</span></a>
-            <a class="cta" href="#contact"><span>Book a shoot</span><span class="cta__arrow">↗</span></a>
+            <a class="cta cta--accent" href="#contact"><span>Book a shoot</span><span class="cta__arrow">↗</span></a>
+            <a class="cta" href="#gallery"><span>View Gallery</span><span class="cta__arrow">↓</span></a>
           </div>
         </div>
       </div>
@@ -102,86 +128,86 @@
       </div>
 
       <div class="gallery__grid">
-        <article class="gitem" data-reveal data-kind="Photo"
+        <button class="gitem" type="button" aria-label="Open photo: Nature / Landscape" data-reveal data-kind="Photo"
           data-caption="Golf course with a road cutting through — shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">01</span><span class="gitem__kind">Photo</span>
             <img src="assets/images/fpv-photo-01.jpg" alt="Top-down aerial of a road crossing a green golf course" loading="lazy" decoding="async" />
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Nature / Landscape</span><span class="gitem__view">View ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Nature / Landscape</span><span class="gitem__view">View ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-01.mp4"
+        <button class="gitem" type="button" aria-label="Play video: Car Chasing" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-01.mp4"
           data-caption="Dynamic car-chase sequence in an open environment — shot on DJI O3 Air Unit.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">02</span><span class="gitem__kind">Video</span>
             <video src="assets/videos/Fpv-Clip-01-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-01-poster.jpg"></video>
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Car Chasing</span><span class="gitem__view">Play ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Car Chasing</span><span class="gitem__view">Play ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:2" data-kind="Photo"
+        <button class="gitem" type="button" aria-label="Open photo: Night Shots" data-reveal style="--i:2" data-kind="Photo"
           data-caption="Low-light night shooting — Oakland Temple, shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">03</span><span class="gitem__kind">Photo</span>
             <img src="assets/images/fpv-photo-02.jpg" alt="Illuminated temple from above at night" loading="lazy" decoding="async" />
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Night Shots</span><span class="gitem__view">View ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Night Shots</span><span class="gitem__view">View ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal data-kind="Video" data-full="assets/videos/Fpv-Clip-02.mp4"
+        <button class="gitem" type="button" aria-label="Play video: City Fly-Through" data-reveal data-kind="Video" data-full="assets/videos/Fpv-Clip-02.mp4"
           data-caption="Cinematic fly-through of Oakland, CA — shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">04</span><span class="gitem__kind">Video</span>
             <video src="assets/videos/Fpv-Clip-02-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-02-poster.jpg"></video>
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">City Fly-Through</span><span class="gitem__view">Play ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">City Fly-Through</span><span class="gitem__view">Play ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-03.mp4"
+        <button class="gitem" type="button" aria-label="Play video: Cinematic FPV" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-03.mp4"
           data-caption="Outdoor cinematic freestyle flight at Hayward Field — shot on DJI O3 Air Unit.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">05</span><span class="gitem__kind">Video</span>
             <video src="assets/videos/Fpv-Clip-03-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-03-poster.jpg"></video>
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Cinematic FPV</span><span class="gitem__view">Play ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Cinematic FPV</span><span class="gitem__view">Play ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:2" data-kind="Video" data-full="assets/videos/Fpv-Clip-04.mp4"
+        <button class="gitem" type="button" aria-label="Play video: Landscape Cinematic" data-reveal style="--i:2" data-kind="Video" data-full="assets/videos/Fpv-Clip-04.mp4"
           data-caption="Sunset with fog rolling over the hills — shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">06</span><span class="gitem__kind">Video</span>
             <video src="assets/videos/Fpv-Clip-04-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-04-poster.jpg"></video>
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Landscape Cinematic</span><span class="gitem__view">Play ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Landscape Cinematic</span><span class="gitem__view">Play ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal data-kind="Photo"
+        <button class="gitem" type="button" aria-label="Open photo: Top-Down Landscape" data-reveal data-kind="Photo"
           data-caption="Freeway threading through a neighborhood — shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">07</span><span class="gitem__kind">Photo</span>
             <img src="assets/images/fpv-photo-03.jpg" alt="Vertical top-down shot of a freeway through a neighborhood" loading="lazy" decoding="async" />
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Top-Down Landscape</span><span class="gitem__view">View ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Top-Down Landscape</span><span class="gitem__view">View ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-05.mp4"
+        <button class="gitem" type="button" aria-label="Play video: Music Video" data-reveal style="--i:1" data-kind="Video" data-full="assets/videos/Fpv-Clip-05.mp4"
           data-caption="Crane-dive to drummer for a music video — shot on DJI O3 Air Unit.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">08</span><span class="gitem__kind">Video</span>
             <video src="assets/videos/Fpv-Clip-05-preview.mp4" muted loop playsinline preload="none" poster="assets/images/fpv-clip-05-poster.jpg"></video>
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Music Video</span><span class="gitem__view">Play ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Music Video</span><span class="gitem__view">Play ↗</span></span>
+        </button>
 
-        <article class="gitem" data-reveal style="--i:2" data-kind="Photo"
+        <button class="gitem" type="button" aria-label="Open photo: Home / Real Estate" data-reveal style="--i:2" data-kind="Photo"
           data-caption="Real-estate / neighborhood street view — shot on DJI Mini 3 Pro.">
-          <div class="gitem__media">
+          <span class="gitem__media">
             <span class="gitem__no">09</span><span class="gitem__kind">Photo</span>
             <img src="assets/images/fpv-photo-04.jpg" alt="Aerial of a residential street" loading="lazy" decoding="async" />
-          </div>
-          <div class="gitem__bar"><span class="gitem__title">Home / Real Estate</span><span class="gitem__view">View ↗</span></div>
-        </article>
+          </span>
+          <span class="gitem__bar"><span class="gitem__title">Home / Real Estate</span><span class="gitem__view">View ↗</span></span>
+        </button>
       </div>
     </section>
 
@@ -209,7 +235,7 @@
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox__content" role="dialog" aria-modal="true">
+    <div class="lightbox__content" role="dialog" aria-modal="true" aria-label="Media viewer">
       <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Close">×</button>
       <div class="lightbox__media" id="lightbox-media"></div>
       <p class="lightbox__cap" id="lightbox-cap"></p>

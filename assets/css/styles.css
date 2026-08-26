@@ -9,7 +9,7 @@
   --bg: #100904;
   --fg: #ffedd7;
   --cream: #ffedd7;
-  --fg-soft: #6c5f51;
+  --fg-soft: #9b8b78;      /* warm grey-brown — muted text, 5.98:1 on --bg */
   --line: #40372e;
   --cork: #382416;
   --accent: #dc5000;
@@ -39,7 +39,7 @@ html[data-theme="light"] {
   --fg-soft: #6f6152;
   --line: #c7b69a;
   --cork: #382416;
-  --accent: #c2470a;
+  --accent: #a63a06;      /* deepened sienna — 5.03:1 on the light ground */
 }
 
 /* ---------- RESET ---------- */
@@ -87,6 +87,16 @@ img, video, canvas { display: block; max-width: 100%; }
 body.scrolled .scroll-prompt { opacity: 0; pointer-events: none; }
 
 /* ---------- BUTTONS ---------- */
+.btn-ghost, .cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--fg); border: 1px solid var(--fg);
+  border-radius: 22.5px; padding: 12px 20px; font-size: var(--t-body); font-weight: 400;
+  cursor: pointer; transition: border-color var(--t-base), color var(--t-base);
+}
+.btn-ghost:hover, .cta:hover { border-color: var(--accent); }
+/* .cta--accent has to come AFTER .cta: same specificity, and when it sat
+   above with .btn-cork the ghost rule simply overwrote the fill, so the
+   "primary" button rendered pixel-identical to the secondary one. */
 .btn-cork, .cta--accent {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   background: var(--cork); color: var(--cream); border: 1px solid transparent;
@@ -94,13 +104,6 @@ body.scrolled .scroll-prompt { opacity: 0; pointer-events: none; }
   cursor: pointer; transition: border-color var(--t-base), opacity var(--t-base);
 }
 .btn-cork:hover, .cta--accent:hover { border-color: var(--accent); }
-.btn-ghost, .cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: transparent; color: var(--fg); border: 1px solid var(--fg);
-  border-radius: 22.5px; padding: 7.5px 16px; font-size: var(--t-body); font-weight: 400;
-  cursor: pointer; transition: border-color var(--t-base), color var(--t-base);
-}
-.btn-ghost:hover, .cta:hover { border-color: var(--accent); }
 .cta__arrow { transition: transform var(--t-fast); }
 .cta:hover .cta__arrow, .cta--accent:hover .cta__arrow { transform: translate(3px, -3px); }
 .btn-flat {
@@ -221,8 +224,9 @@ main, .foot {
 .hero__row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-top: 24px; }
 .hero__subtitle { max-width: 40ch; font-size: var(--t-sub); color: var(--cream); }
 .hero__actions { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero .cta { color: var(--cream); border-color: var(--cream); }
+.hero .cta:not(.cta--accent) { color: var(--cream); border-color: var(--cream); }
 .hero .cta:hover { border-color: var(--accent); }
+.hero .cta--accent { color: var(--cream); }
 .hero__scroll { display: none; }
 
 /* idle → fullscreen reel (UI fades after 3s at the top) */
@@ -251,10 +255,28 @@ body.ui-minimal .hero__scrim {
 .shead__meta { margin-left: auto; font-size: var(--t-caption); text-transform: uppercase; color: var(--fg-soft); text-align: right; }
 
 .gallery__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.gitem { position: relative; cursor: pointer; }
-.gitem__media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--cork); }
+/* each tile is a real <button>: it used to be an <article> with a click
+   handler, which meant nine items no keyboard or screen reader could reach */
+.gitem {
+  position: relative;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.gitem:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.gitem__media { display: block; position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--cork); }
 .gitem__media img, .gitem__media video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
-.gitem:hover .gitem__media img, .gitem:hover .gitem__media video { transform: scale(1.04); }
+.gitem:hover .gitem__media img, .gitem:hover .gitem__media video,
+.gitem:focus-visible .gitem__media img, .gitem:focus-visible .gitem__media video { transform: scale(1.04); }
 .gitem__no { position: absolute; top: 10px; left: 12px; z-index: 2; font-size: var(--t-caption); color: var(--cream); mix-blend-mode: difference; }
 .gitem__kind {
   position: absolute; top: 10px; right: 12px; z-index: 2;
@@ -264,7 +286,8 @@ body.ui-minimal .hero__scrim {
 .gitem__bar { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 10px 0 0; }
 .gitem__title { font-size: var(--t-body); font-weight: 500; }
 .gitem__view { font-size: var(--t-caption); text-transform: uppercase; color: var(--fg-soft); transition: color var(--t-fast), transform var(--t-fast); }
-.gitem:hover .gitem__view { color: var(--accent); transform: translateX(3px); }
+.gitem:hover .gitem__view,
+.gitem:focus-visible .gitem__view { color: var(--accent); transform: translateX(3px); }
 
 /* ---------- ABOUT ---------- */
 .about__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 41px; align-items: start; }
@@ -320,11 +343,15 @@ body.lb-open { overflow: hidden; }
 
 /* mobile nav toggle */
 .nav-toggle {
-  display: none; width: 38px; height: 32px; border: 1px solid var(--fg); background: transparent;
-  cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-  border-radius: 22.5px;
+  display: none; width: 44px; height: 40px; border: 1px solid var(--fg); background: transparent;
+  color: var(--fg); cursor: pointer;
+  flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  border-radius: 22.5px; transition: border-color var(--t-base);
 }
-.nav-toggle span { width: 15px; height: 1px; background: var(--fg); }
+.nav-toggle:hover { border-color: var(--accent); }
+.nav-toggle span { width: 16px; height: 1px; background: var(--fg); transition: transform var(--t-fast); }
+.nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(3px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:last-child  { transform: translateY(-3px) rotate(-45deg); }
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
@@ -337,14 +364,18 @@ body.lb-open { overflow: hidden; }
 }
 @media (max-width: 640px) {
   .topnav {
-    position: fixed; inset: var(--header-h) 0 auto 0; flex-direction: column; align-items: flex-start;
-    gap: 2px; padding: 18px var(--gut); background: var(--bg); border-bottom: 1px solid var(--line);
+    position: fixed; inset: var(--header-h) 0 auto 0; flex-direction: column; align-items: stretch;
+    gap: 0; padding: 4px var(--gut) 18px; background: var(--bg); border-bottom: 1px solid var(--line);
     transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity var(--t-fast), transform var(--t-fast);
   }
   .topnav.is-open { opacity: 1; transform: none; pointer-events: auto; }
-  .topnav__link { font-size: 14px; padding: 8px 0; }
-  .topnav .theme-toggle { margin-top: 8px; }
-  .nav-toggle { display: flex; margin-left: auto; }
+  /* 13px of padding on an 18px line box clears the 44px touch target */
+  .topnav__link { font-size: 14px; padding: 13px 0; }
+  .topnav__link + .topnav__link { border-top: 1px dashed var(--line); }
+  .topnav__link::after { display: none; }
+  /* pills in the drawer get the same 44px treatment as the links */
+  .topnav .theme-toggle { align-self: flex-start; margin-top: 12px; padding: 14px 20px; }
+  .nav-toggle { display: flex; }
   .gallery__grid { grid-template-columns: 1fr; }
   .spec__row { grid-template-columns: 1fr; gap: 2px; }
 }

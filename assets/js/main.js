@@ -10,8 +10,10 @@
   btn.addEventListener("click", function () {
     var d = document.documentElement;
     var next = d.dataset.theme === "dark" ? "light" : "dark";
-    d.dataset.theme = next;
-    try { localStorage.setItem("theme", next); } catch (e) {}
+    /* __setTheme is defined by the boot script in <head>; it writes the
+       cookie that carries the choice across the sibling subdomains. */
+    if (window.__setTheme) window.__setTheme(next);
+    else d.dataset.theme = next;
   });
 })();
 
@@ -94,30 +96,45 @@
   }
 })();
 
-/* ---- mobile nav ---- */
+/* ---- mobile nav drawer ---- */
 (function () {
   var toggle = document.getElementById("nav-toggle");
   var nav = document.getElementById("topnav");
   if (!toggle || !nav) return;
-  toggle.addEventListener("click", function () {
-    var open = nav.classList.toggle("is-open");
+
+  function set(open) {
+    nav.classList.toggle("is-open", open);
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  toggle.addEventListener("click", function () {
+    set(!nav.classList.contains("is-open"));
   });
-  nav.querySelectorAll("a").forEach(function (a) {
-    a.addEventListener("click", function () {
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-    });
+  /* a drawer that stays open after you pick something, or that you cannot
+     dismiss without finding the button again, is worse than no drawer */
+  nav.addEventListener("click", function (e) {
+    if (e.target.closest("a")) set(false);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("is-open")) { set(false); toggle.focus(); }
+  });
+  document.addEventListener("click", function (e) {
+    if (!nav.classList.contains("is-open")) return;
+    if (!nav.contains(e.target) && !toggle.contains(e.target)) set(false);
   });
 })();
 
-/* ---- gallery hover-play ---- */
+/* ---- gallery preview playback (hover or keyboard focus) ---- */
 (function () {
   document.querySelectorAll(".gitem video").forEach(function (video) {
     var item = video.closest(".gitem");
     if (!item) return;
-    item.addEventListener("mouseenter", function () { video.play().catch(function () {}); });
-    item.addEventListener("mouseleave", function () { video.pause(); video.currentTime = 0; });
+    function start() { video.play().catch(function () {}); }
+    function stop() { video.pause(); video.currentTime = 0; }
+    item.addEventListener("mouseenter", start);
+    item.addEventListener("mouseleave", stop);
+    /* the tile is a button now, so tabbing to it should preview too */
+    item.addEventListener("focus", start);
+    item.addEventListener("blur", stop);
   });
 })();
 
@@ -128,6 +145,18 @@
   var cap = document.getElementById("lightbox-cap");
   var closeBtn = document.getElementById("lightbox-close");
   if (!lb || !media) return;
+
+  var lastFocus = null;
+  var FOCUSABLE = 'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])';
+
+  /* while the dialog is up, nothing behind it should be reachable by Tab */
+  function background(inert) {
+    Array.prototype.forEach.call(document.body.children, function (el) {
+      if (el === lb) return;
+      if (inert) el.setAttribute("inert", "");
+      else el.removeAttribute("inert");
+    });
+  }
 
   function open(srcEl, caption, state, fullSrc) {
     media.innerHTML = "";
@@ -141,8 +170,6 @@
       clone.setAttribute("controls", "");
       clone.setAttribute("preload", "auto");
       clone.removeAttribute("loop");
-    } else {
-      clone.setAttribute("loading", "eager"); /* show immediately in the lightbox */
       var t = (state && state.currentTime) || 0;
       var wasPaused = state ? state.wasPaused : true;
       var go = function () {
@@ -151,12 +178,18 @@
       };
       if (clone.readyState >= 1) go();
       else clone.addEventListener("loadedmetadata", go, { once: true });
+    } else {
+      clone.setAttribute("loading", "eager"); /* show immediately in the lightbox */
     }
     media.appendChild(clone);
     cap.textContent = caption || "";
+
+    lastFocus = document.activeElement;
     lb.classList.add("is-open");
     document.body.classList.add("lb-open");
     lb.setAttribute("aria-hidden", "false");
+    background(true);
+    closeBtn.focus();
   }
 
   function close() {
@@ -166,12 +199,25 @@
     lb.classList.remove("is-open");
     document.body.classList.remove("lb-open");
     lb.setAttribute("aria-hidden", "true");
+    background(false);
+    /* put the caret back on the tile that opened it */
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    lastFocus = null;
   }
 
   closeBtn.addEventListener("click", close);
   lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && lb.classList.contains("is-open")) close();
+    if (!lb.classList.contains("is-open")) return;
+    if (e.key === "Escape") { close(); return; }
+    if (e.key !== "Tab") return;
+    /* keep Tab inside the dialog for browsers without inert */
+    var items = lb.querySelectorAll(FOCUSABLE);
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
   document.querySelectorAll(".gitem").forEach(function (item) {
